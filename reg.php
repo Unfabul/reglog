@@ -1,5 +1,5 @@
 <?php
-    require_once("admin/config.php");
+require_once("admin/config.php");
 ?>
 
 <!DOCTYPE html>
@@ -14,10 +14,8 @@
 </head>
 <body>
     <div class="container reg">
-        <?php
-            if(!isset($_GET['send'])){
-        ?>
-        <form action="reg.php" method="GET">
+    
+        <form action="reg.php" method="GET" id="reg-form">
             <div class="form-group">
                 <label for="exampleInputEmail1">Email</label>
                 <input name="email" type="text" class="form-control" id="exampleInputEmail1" placeholder="Введите email">
@@ -58,39 +56,16 @@
                 <input name="agree" type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">Даю согласие на обработку данных</label>
             </div>
-            <button name="send" type="submit" class="btn btn-primary">Войти</button>
+            <button type="submit" class="btn btn-primary">Войти</button>
         </form>
-        <?php
-            }
 
-            else if(isset($_GET['send'])&&!empty($_GET['login'])&&!empty($_GET['email'])&&!empty($_GET['password'])&&!empty($_GET['agree'])){
-                $queryLog = "SELECT id from users WHERE login ='".$_GET['login']."' or email ='".$_GET['email']."'";
-                $resultLog = mysqli_query($db, $queryLog) or die ("Error #1");
+        <div class="success-state"></div>
 
-                if(mysqli_num_rows($resultLog)>0){
-                    echo "Этот логин или email заняты! <a href='reg.php'>Попробовать еще раз!</a>";
-                }else{
-                    $email = mysqli_real_escape_string($db, $_GET['email']);
-                    $login = mysqli_real_escape_string($db, $_GET['login']);
-                    $realname = mysqli_real_escape_string($db, $_GET['realname']);
-                    $pass = mysqli_real_escape_string($db, $_GET['password']);
-
-                    $query = "INSERT INTO users (id, email, login, realname, password, birthdate, country, agree) VALUE (NULL, '{$email}', '{$login}', '{$realname}', '{$pass}', '{$_GET['birthdate']}', '{$_GET['country']}', '{$_GET['agree']}')";
-
-                    $result = mysqli_query($db, $query) or die ("Error #2");
-
-                    if( $result ){
-                        echo "Ваш логин - ".$login.".<br> Ваш email - ".$email.".<br> Ваше настоящее имя - ".$realname.".<br> Дата рождения - ".$_GET['birthdate'].".<br> Страна проживания - ".$_GET['country'].".<br> <a href='login.php'>Выйти из аккаунта</a>";
-                    }
-                }
-            }else{
-                echo "Регистрация невозможна либо Вы не дали согласие на обработку данных! <a href='reg.php'>Попробовать еще раз</a>";
-            }
-            mysqli_close($db);
-        ?>
     </div>
+
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
+    <script src="js/reg.js"></script>
 
 <script>
     $("#datepicker").datepicker();
