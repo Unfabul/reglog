@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Июн 19 2019 г., 20:34
+-- Время создания: Июн 20 2019 г., 21:13
 -- Версия сервера: 10.1.38-MariaDB
 -- Версия PHP: 7.3.2
 
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `country` varchar(255) NOT NULL,
   `agree` varchar(5) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `users`
@@ -76,7 +76,11 @@ INSERT INTO `users` (`id`, `email`, `login`, `realname`, `password`, `birthdate`
 (10, '123456@test.ru', 'test4', 'name', '213', '36', '...', 'on'),
 (11, '1234567@test.ru', 'test5', 'ÐŸÐ°Ð²ÐµÐ»', '1234', '02-02-2000', '...', 'on'),
 (12, '12345678@test.ru', 'test6', 'Ð˜Ð³Ð¾Ñ€ÑŒ', '1234', '15-06-1900', '...', ''),
-(13, '00@test.ru', 'test11', 'Барс', '134', '7-7-1998', 'Франция', 'on');
+(13, '00@test.ru', 'test11', 'Барс', '134', '7-7-1998', 'Франция', 'on'),
+(14, '100@test.ru', 'test200', 'Radion', '155', '11/11/2017', 'Франция', 'on'),
+(16, '200@test.ru', 'test400', 'Вася', '123', '06/11/2019', 'Испания', 'on'),
+(17, '700@test.ru', 'test700', 'Julia', '123', '06/11/2019', 'Германия', 'on'),
+(18, '9000@test.ru', 'test9000', 'Harry', '123', '01/16/2018', 'Аргентина', 'on');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
