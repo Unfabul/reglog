@@ -1,3 +1,7 @@
+<?php
+    require_once("admin/config.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,11 +10,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Reg</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
 </head>
 <body>
     <div class="container reg">
         <?php
-            require_once("admin/config.php");
             if(!isset($_GET['send'])){
         ?>
         <form action="reg.php" method="GET">
@@ -31,8 +35,8 @@
                 <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Введите пароль">
             </div>
             <div class="form-group">
-                <label for="exampleInputDateOfBirth1">Дата рождения</label>
-                <input name="birthdate" type="text" class="form-control" id="exampleInputDateOfBirth1" placeholder="День-месяц-год">
+                <label for="datepicker">Дата рождения</label>
+                <input name="birthdate" type="text" class="form-control" id="datepicker" placeholder="мм-дд-гг" readonly>
             </div>
             <div class="form-group">
                 <label for="inputState">Страна</label>
@@ -66,12 +70,17 @@
                 if(mysqli_num_rows($resultLog)>0){
                     echo "Этот логин или email заняты! <a href='reg.php'>Попробовать еще раз!</a>";
                 }else{
-                    $query = "INSERT INTO users (id, email, login, realname, password, birthdate, country, agree) VALUE (NULL, '{$_GET['email']}', '{$_GET['login']}', '{$_GET['realname']}', '{$_GET['password']}', '{$_GET['birthdate']}', '{$_GET['country']}', '{$_GET['agree']}')";
+                    $email = mysqli_real_escape_string($db, $_GET['email']);
+                    $login = mysqli_real_escape_string($db, $_GET['login']);
+                    $realname = mysqli_real_escape_string($db, $_GET['realname']);
+                    $pass = mysqli_real_escape_string($db, $_GET['password']);
+
+                    $query = "INSERT INTO users (id, email, login, realname, password, birthdate, country, agree) VALUE (NULL, '{$email}', '{$login}', '{$realname}', '{$pass}', '{$_GET['birthdate']}', '{$_GET['country']}', '{$_GET['agree']}')";
 
                     $result = mysqli_query($db, $query) or die ("Error #2");
 
                     if( $result ){
-                        echo "Ваш логин - ".$_GET['login'].".<br> Ваш email - ".$_GET['email'].".<br> Ваше настоящее имя - ".$_GET['realname'].".<br> Дата рождения - ".$_GET['birthdate'].".<br> Страна проживания - ".$_GET['country'].".<br> <a href='login.php'>Выйти из аккаунта</a>";
+                        echo "Ваш логин - ".$login.".<br> Ваш email - ".$email.".<br> Ваше настоящее имя - ".$realname.".<br> Дата рождения - ".$_GET['birthdate'].".<br> Страна проживания - ".$_GET['country'].".<br> <a href='login.php'>Выйти из аккаунта</a>";
                     }
                 }
             }else{
@@ -80,5 +89,12 @@
             mysqli_close($db);
         ?>
     </div>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+
+<script>
+    $("#datepicker").datepicker();
+</script>
+
 </body>
 </html>
